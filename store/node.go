@@ -95,7 +95,7 @@ func copyMap(a map[string]node) map[string]node {
 	return b
 }
 
-// Return value is replacement node
+// set; Return value is replacement node
 func (n node) set(parts []string, v string, rev int64, keep bool) (node, bool) {
 	if len(parts) == 0 {
 		return node{v, rev, n.Ds}, keep

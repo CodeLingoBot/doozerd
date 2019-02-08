@@ -71,7 +71,7 @@ type watch struct {
 	c    chan<- Event
 }
 
-// Creates a new, empty data store. Mutations will be applied in order,
+// New creates a new, empty data store. Mutations will be applied in order,
 // starting at number 1 (number 0 can be thought of as the creation of the
 // store).
 func New() *Store {
@@ -113,7 +113,7 @@ func checkPath(k string) error {
 	return nil
 }
 
-// Returns a mutation that can be applied to a `Store`. The mutation will set
+// EncodeSet returns a mutation that can be applied to a `Store`. The mutation will set
 // the contents of the file at `path` to `body` iff `rev` is greater than
 // of equal to the file's revision at the time of application, with
 // one exception: if `rev` is Clobber, the file will be set unconditionally.
@@ -124,7 +124,7 @@ func EncodeSet(path, body string, rev int64) (mutation string, err error) {
 	return strconv.FormatInt(rev, 10) + ":" + path + "=" + body, nil
 }
 
-// Returns a mutation that can be applied to a `Store`. The mutation will cause
+// EncodeDel returns a mutation that can be applied to a `Store`. The mutation will cause
 // the file at `path` to be deleted iff `rev` is greater than
 // of equal to the file's revision at the time of application, with
 // one exception: if `rev` is Clobber, the file will be deleted
@@ -290,7 +290,7 @@ func firstTodo(a []Op) (pos int) {
 	return
 }
 
-// Returns a point-in-time snapshot of the contents of the store.
+// Snap returns a point-in-time snapshot of the contents of the store.
 func (st *Store) Snap() (ver int64, g Getter) {
 	// WARNING: Be sure to read the pointer value of st.state only once. If you
 	// need multiple accesses, copy the pointer first.
@@ -299,7 +299,7 @@ func (st *Store) Snap() (ver int64, g Getter) {
 	return p.ver, p.root
 }
 
-// Gets the value stored at `path`, if any.
+// Get; the value stored at `path`, if any.
 //
 // If no value is stored at `path`, `rev` will be `Missing` and `value` will be
 // nil.
@@ -318,14 +318,14 @@ func (st *Store) Stat(path string) (int32, int64) {
 	return g.Stat(path)
 }
 
-// Apply all operations in the internal queue, even if there are gaps in the
+// Flush; Apply all operations in the internal queue, even if there are gaps in the
 // sequence (gaps will be treated as no-ops). This is only useful for
 // bootstrapping a store from a point-in-time snapshot of another store.
 func (st *Store) Flush() {
 	st.flush <- true
 }
 
-// Returns a chan that will receive a single event representing the
+// Wait returns a chan that will receive a single event representing the
 // first change made to any file matching glob on or after rev.
 //
 // If rev is less than any value passed to st.Clean, Wait will return

@@ -9,7 +9,7 @@ type Getter interface {
 	Stat(path string) (ln int32, rev int64)
 }
 
-// Retrieves the body stored in `g` at `path` and returns it. If `path` is a
+// GetString retrieves the body stored in `g` at `path` and returns it. If `path` is a
 // directory or does not exist, returns an empty string.
 //
 // Note, with this function it is impossible to distinguish between an empty
@@ -26,7 +26,7 @@ func GetString(g Getter, path string) (body string) {
 	return v[0]
 }
 
-// Returns a list of entries in `g` in the directory at `path`. If `path` is
+// Getdir returns a list of entries in `g` in the directory at `path`. If `path` is
 // not a directory, returns an empty slice.
 //
 // Note, with this function it is impossible to distinguish between a string

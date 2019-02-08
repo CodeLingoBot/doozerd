@@ -21,7 +21,7 @@ type Glob struct {
 
 var globRe = mustBuildRe(`(` + charPat + `|[\*\?])`)
 
-// Supports unix/ruby-style glob patterns:
+// translateGlob supports unix/ruby-style glob patterns:
 //  - `?` matches a single char in a single path component
 //  - `*` matches zero or more chars in a single path component
 //  - `**` matches zero or more chars in zero or more components

@@ -30,21 +30,21 @@ func (e Event) Desc() string {
 	panic("unreachable")
 }
 
-// Returns true iff the operation represented by `e` set a path.
+// IsSet returns true iff the operation represented by `e` set a path.
 //
 // Mutually exclusive with `IsDel` and `IsNop`.
 func (e Event) IsSet() bool {
 	return e.Rev > Missing
 }
 
-// Returns true iff the operation represented by `e` deleted a path.
+// IsDel returns true iff the operation represented by `e` deleted a path.
 //
 // Mutually exclusive with `IsSet` and `IsNop`.
 func (e Event) IsDel() bool {
 	return e.Rev == Missing
 }
 
-// Returns true iff `e` does not represent a path operation.
+// IsNop returns true iff `e` does not represent a path operation.
 //
 // Mutually exclusive with `IsSet` and `IsDel`.
 func (e Event) IsNop() bool {

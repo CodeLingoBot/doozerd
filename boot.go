@@ -144,7 +144,7 @@ func isCal(name, addr string) (*doozer.Conn, error) {
 	return nil, nil
 }
 
-// Find possible addresses for cluster named name.
+// lookup; Find possible addresses for cluster named name.
 func lookup(b *doozer.Conn, name string) (as []string) {
 	rev, err := b.Rev()
 	if err != nil {
